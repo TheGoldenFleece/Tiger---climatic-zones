@@ -1,50 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Sunray : MonoBehaviour
 {
-    private const string RAINDROP_LAYER_NAME = "Raindrop";
-    private const string UMBRELLA_LAYER_NAME = "Umbrella";
-    private const string TIGER_LAYER_NAME = "Tiger";
-
     [SerializeField] private Collider2D sunrayCollider;
 
-    [SerializeField] private int sps = 5;
-    [SerializeField] private int dps = 7;
+    private float lifeTime = 3.0f;
 
-    private int raindropLayer;
-    private int umbrellaLayer;
-    private int tigerLayer;
-
-    private bool isDamaging;
+    private int sps;
+    private int dps;
 
     private Collider2D tigerCollider;
-    private void Awake() {
-        isDamaging = true;
-
-        raindropLayer = LayerMask.NameToLayer(RAINDROP_LAYER_NAME);
-        umbrellaLayer = LayerMask.NameToLayer(UMBRELLA_LAYER_NAME);
-        tigerLayer = LayerMask.NameToLayer(TIGER_LAYER_NAME);
-    }
 
     private void Start() {
+        sps = GameManager.Instance.GDSO.scorePerSecond;
+        dps = GameManager.Instance.GDSO.damagePerSecond;
+
         tigerCollider = Tiger.Instance.GetComponent<Collider2D>();
+
+        Destroy(this.gameObject, lifeTime);
     }
 
     private void FixedUpdate() {
+        lifeTime -= Time.fixedDeltaTime;
+        lifeTime = Mathf.Clamp(lifeTime, 0, Mathf.Infinity);
+    }
 
-        if (Physics2D.IsTouching(sunrayCollider, tigerCollider)) {
-            GameManager.UpdateCounter(sps * Time.fixedDeltaTime);
-            isDamaging = false;
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision == tigerCollider) {
+            GameManager.UpdateCounter(sps * lifeTime);
 
+            Destroy(this.gameObject);
         }
-        else {
-            HPUI.Instance.GetDamage(dps * Time.fixedDeltaTime);
-            isDamaging = true;
-        }
+    }
 
-        Debug.Log(isDamaging);
+    private void OnDestroy() {
+        HPUI.Instance.GetDamage(dps);
 
     }
 

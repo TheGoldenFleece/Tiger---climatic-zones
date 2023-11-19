@@ -14,10 +14,11 @@ public class SunraySpawner : MonoBehaviour
     [SerializeField] private Transform leftSunrayPrefab;
     [SerializeField] private Transform rightSunrayPrefab;
 
-    [SerializeField, Range(1f, 5f)] private float lifeDuration = 3.0f;
-
     private IEnumerator spawnCoroutine;
     private Transform sunrayTransform;
+
+    private int sunrayAmount;
+    private float sunraySpawnRate = .5f;
 
     private void Awake() {
         spawnCoroutine = SpawnCoroutine();
@@ -26,6 +27,8 @@ public class SunraySpawner : MonoBehaviour
     private void Start() {
         GameManager.Instance.OnSunZoneStarted += GameManager_OnSunZoneStarted;
         GameManager.Instance.OnSunZoneCanceled += GameManager_OnSunZoneCanceled;
+
+        sunrayAmount = GameManager.Instance.GDSO.sunrayAmount;
     }
 
     private void OnDestroy() {
@@ -48,9 +51,12 @@ public class SunraySpawner : MonoBehaviour
     IEnumerator SpawnCoroutine() {
         while (GameManager.Instance.GetZone == Zone.Sun) {
 
-            SpawnSunray();
+            int randomAmount = Random.Range(1, sunrayAmount);
+            for (int i = 0; i < randomAmount; i++) {
+                SpawnSunray();
+            }
 
-            yield return new WaitForSeconds(lifeDuration);
+            yield return new WaitForSeconds(1 / sunraySpawnRate);
         }
 
         yield break;
@@ -74,7 +80,6 @@ public class SunraySpawner : MonoBehaviour
             sunrayTransform.GetComponent<RandomMovementController>().SetCorners(rightStartCorner.position, rightEndCorner.position);
         }
         sunrayTransform.SetParent(parent);
-        Destroy(sunrayTransform.gameObject, lifeDuration);
     }
 
     private Vector2 GetRandomPosition(Vector2 leftCorner, Vector2 rightCorner) {

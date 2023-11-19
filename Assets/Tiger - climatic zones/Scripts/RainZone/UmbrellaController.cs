@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,12 +6,13 @@ public class UmbrellaController : MonoBehaviour
 {
     public bool EnabledMovement { private set; get; }
 
-    [SerializeField] private Transform umbrellaTransform;
-    [SerializeField] private Collider2D umbrellaCollider;
     [SerializeField] private Collider2D tigerCollider;
 
-    [SerializeField] private int sps = 10;
-    [SerializeField] private int dps = 5;
+    private int sps;
+    private int dps;
+
+    private Transform umbrellaTransform;
+    private Collider2D umbrellaCollider;
 
     private bool isDragging;
     private Vector2 screenPosition;
@@ -21,6 +21,12 @@ public class UmbrellaController : MonoBehaviour
     private void Start() {
         GameManager.Instance.OnRainZoneStarted += GameManager_OnRainZoneStarted;
         GameManager.Instance.OnRainZoneCanceled += GameManager_OnRainZoneCanceled;
+
+        umbrellaTransform = Instantiate(GameManager.Instance.GDSO.umbrellaPrefab, Vector2.zero, Quaternion.identity);
+        umbrellaCollider = umbrellaTransform.GetComponent<Umbrella>().SafeArea;
+
+        sps = GameManager.Instance.GDSO.scorePerSecond;
+        dps = GameManager.Instance.GDSO.damagePerSecond;
 
         Drop();
         this.enabled = false;

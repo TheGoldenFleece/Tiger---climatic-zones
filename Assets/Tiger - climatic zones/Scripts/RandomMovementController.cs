@@ -6,8 +6,6 @@ public class RandomMovementController : MonoBehaviour
     [SerializeField] private float speed = 2.0f;
     public float GetSpeed => speed;
 
-    //private float radius = 1f;
-
     private Vector2 startCorner;
     private Vector2 endCorner;
 
@@ -57,13 +55,10 @@ public class RandomMovementController : MonoBehaviour
     }
 
     private Vector2 GetRandomPosition() {
-        //Vector2 position = Random.insideUnitCircle.normalized;
-        //position *= radius;
-        //position += Vector2.zero;
 
         float randX = Random.Range(startCorner.x, endCorner.x);
         float randY = Random.Range(startCorner.y, endCorner.y);
-        Vector2 position = new Vector2(randX, randY);
+        Vector2 position = new(randX, randY);
 
         return position;
     }

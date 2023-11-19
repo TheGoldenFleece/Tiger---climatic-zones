@@ -14,18 +14,18 @@ public class HPUI : MonoBehaviour
     public event EventHandler OnNoHealthLeft;
 
     private float HP;
-    private float maxHP = 100;
+    private float maxHP;
 
     private void Awake() {
         if (Instance != null) {
             Debug.LogError("There should be only one HPUI Instance");
         }
         Instance = this;
+    }
 
+    private void Start() {
+        maxHP = GameManager.Instance.GDSO.HP;
         HP = maxHP;
-
-        unharmedColor.a = 1;
-        harmedColor.a = 1;
 
         foreach (Image image in heartImagesArray) {
             image.color = unharmedColor;

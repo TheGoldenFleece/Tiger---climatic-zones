@@ -1,13 +1,13 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
-    private const string MAIN_SCENE_NAME = "Main";
+    
     private const string SCORE_PREFS = "Score";
 
+    [SerializeField] private GameObject difficultyUI;
     [SerializeField] private Button playButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -20,7 +20,7 @@ public class MainMenuUI : MonoBehaviour
     }
 
     private void Play() {
-        SceneManager.LoadScene(MAIN_SCENE_NAME);
+        difficultyUI.SetActive(true);
     }
 
     private void Exit() {

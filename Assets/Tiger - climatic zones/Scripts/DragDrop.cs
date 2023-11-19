@@ -15,9 +15,6 @@ public class DragDrop : MonoBehaviour {
     }
 
     private void Update() {
-
-        //screenPosition = UmbrellaInputManager.Instance.GetInput();
-
         if (Input.GetMouseButton(0)) {
             Vector3 mousePos = Input.mousePosition;
             screenPosition = new Vector2(mousePos.x, mousePos.y);
@@ -58,6 +55,6 @@ public class DragDrop : MonoBehaviour {
     }
 
     void Drop() {
-
+        isDragging = false;
     }
 }

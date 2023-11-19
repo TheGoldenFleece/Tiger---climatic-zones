@@ -2506,7 +2506,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1183003220}
   - component: {fileID: 1183003221}
-  - component: {fileID: 1183003222}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2541,18 +2540,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01243676056713f4ca3beebfbc3a63e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1183003222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183003219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 655fbb421b6178140aaa98bb50856afd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  gameDifficultySOArray:
+  - {fileID: 11400000, guid: b1331928ac5c5924abc92b7ee36d7188, type: 2}
+  - {fileID: 11400000, guid: ccc84eb925b989c4ab3b77e69495f455, type: 2}
+  - {fileID: 11400000, guid: 9939bbd4bef55504cbc53aca4f58c23b, type: 2}
 --- !u!1 &1207148862
 GameObject:
   m_ObjectHideFlags: 0

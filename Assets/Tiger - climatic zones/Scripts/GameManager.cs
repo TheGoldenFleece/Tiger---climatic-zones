@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public static float Counter;
 
-    public const float ZONE_CHANGE_DELAY = 1.5f;
-    public const float ZONE_DURATION = 15f;
+    public const float ZONE_CHANGE_DELAY = 0.5f;
+
+    [SerializeField] private GameDifficultySO[] gameDifficultySOArray;
 
     public event EventHandler OnRainZoneStarted;
     public event EventHandler OnRainZoneCanceled;
@@ -17,10 +18,14 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnSunZoneCanceled;
     public event EventHandler OnZoneChanged;
 
+    public float ZoneDuration { get; private set; }
+
+    public GameDifficultySO GDSO { get; private set; }
+
     private Zone zone;
     public Zone GetZone => zone;
-    public bool IsGameOver { get; private set; }
 
+    IEnumerator changeZoneCoroutine;
     private void Awake() {
         if (Instance != null) {
             Debug.LogError("More than one GameManager instance");
@@ -29,15 +34,24 @@ public class GameManager : MonoBehaviour
 
         Counter = 0;
 
-        IsGameOver = false;
-
         zone = Zone.Sun;
+
+        changeZoneCoroutine = ChangeZoneCoroutine();
+
+        foreach (GameDifficultySO gameDifficultySO in gameDifficultySOArray) {
+            if (gameDifficultySO.name == PlayerStats.GameDifficulty.ToString()) {
+                GDSO = gameDifficultySO;
+                break;
+            }
+        }
+
+        ZoneDuration = GDSO.zoneDuration;
 
         Time.timeScale = 1f;
     }
 
     private void Start() {
-        StartCoroutine(ChangeZoneCoroutine());
+        StartCoroutine(changeZoneCoroutine);
     }
 
     private void Update() {
@@ -49,7 +63,7 @@ public class GameManager : MonoBehaviour
     }
 
     private IEnumerator ChangeZoneCoroutine() {
-        while (!IsGameOver) {
+        while (true) {
             switch (zone) {
                 case Zone.Rain: {
                         zone = Zone.Sun;
@@ -75,12 +89,11 @@ public class GameManager : MonoBehaviour
                     }
             }
 
-            yield return new WaitForSeconds(ZONE_DURATION);
-
-
+            yield return new WaitForSeconds(ZoneDuration);
         }
-        yield break;
     }
 
-
+    private void OnDestroy() {
+        StopCoroutine(changeZoneCoroutine);
+    }
 }

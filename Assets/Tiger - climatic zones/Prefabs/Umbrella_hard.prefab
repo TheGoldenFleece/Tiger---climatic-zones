@@ -420,6 +420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4743586997020764933}
   - component: {fileID: 4859003971630174357}
+  - component: {fileID: -938931062268766314}
   m_Layer: 10
   m_Name: Umbrella_hard
   m_TagString: Untagged
@@ -458,3 +459,16 @@ SortingGroup:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &-938931062268766314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7271462444663135727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca09728ed8942f943a2291d0d8c095a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  safeArea: {fileID: 6290329810262533474}

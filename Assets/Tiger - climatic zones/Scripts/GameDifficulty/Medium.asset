@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b5015549cc05e24abdc60b91df695d5, type: 3}
   m_Name: Medium
   m_EditorClassIdentifier: 
+  umbrellaPrefab: {fileID: 5356082917274094863, guid: 374ceed7e598e7347b14b8937dddd5b5, type: 3}
   zoneDuration: 10
-  sunrayAmount: 4
-  HP: 70
+  sunrayAmount: 3
+  HP: 80
+  scorePerSecond: 10
+  damagePerSecond: 9
