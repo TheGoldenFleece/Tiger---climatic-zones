@@ -5,8 +5,6 @@ public class TigerController : MonoBehaviour
 {
     public bool EnabledMovement { private set; get; }
 
-    [SerializeField] private Transform tigerTransform;
-
     private Collider2D tigerCollider;
 
     private bool isDragging;
@@ -14,7 +12,7 @@ public class TigerController : MonoBehaviour
     private Vector2 worldPosition;
 
     private void Awake() {
-        tigerCollider = tigerTransform.GetComponent<Collider2D>();
+        tigerCollider = GetComponent<Collider2D>();
     }
 
     private void Start() {
@@ -64,7 +62,7 @@ public class TigerController : MonoBehaviour
     }
 
     void Drag() {
-        tigerTransform.position = worldPosition;
+        transform.position = worldPosition;
     }
 
     private void OnDestroy() {

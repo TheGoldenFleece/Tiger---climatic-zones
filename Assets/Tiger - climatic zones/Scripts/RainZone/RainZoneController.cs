@@ -3,32 +3,45 @@ using UnityEngine;
 
 public class RainZoneController : MonoBehaviour
 {
-    [SerializeField] private Transform tigerTransform;
+    public static RainZoneController Instance { get; private set; }
+
     [SerializeField] private Transform startCorner;
     [SerializeField] private Transform endCorner;
 
-    private RandomMovementController tigerRMC;
+    public Transform GetStartCorner => startCorner;
+    public Transform GetEndCorner => endCorner;
 
-    private void Start() {
-        GameManager.Instance.OnRainZoneStarted += GameManager_OnRainZoneStarted;
-        GameManager.Instance.OnRainZoneCanceled += GameManager_OnRainZoneCanceled;
+    //private Transform tigerTransform;
+    // private RandomMovementController tigerRMC;
 
-        tigerRMC = tigerTransform.GetComponent<RandomMovementController>();
-        tigerRMC.SetCorners(startCorner.position, endCorner.position);
-        tigerRMC.enabled = false;
+    private void Awake() {
+        if (Instance != null) {
+            Debug.LogError("More than one RainZoneController instance");
+        }
+        Instance = this;
     }
 
-    private void GameManager_OnRainZoneCanceled(object sender, EventArgs e) {
-        tigerRMC.enabled = false;
-    }
+    //private void Start() {
+    //    GameManager.Instance.OnRainZoneStarted += GameManager_OnRainZoneStarted;
+    //    GameManager.Instance.OnRainZoneCanceled += GameManager_OnRainZoneCanceled;
 
-    private void GameManager_OnRainZoneStarted(object sender, EventArgs e) {
-        tigerRMC.enabled = true;
-    }
+    //    tigerRMC = tigerTransform.GetComponent<RandomMovementController>();
+    //    tigerRMC.SetCorners(startCorner.position, endCorner.position);
+    //    tigerRMC.enabled = false;
+    //    tigerRMC.SetSpeed(GameManager.Instance.GDSO.tigerSpeed);
+    //}
 
-    private void OnDestroy() {
-        GameManager.Instance.OnRainZoneStarted -= GameManager_OnRainZoneStarted;
-        GameManager.Instance.OnRainZoneCanceled -= GameManager_OnRainZoneCanceled;
-    }
+    //private void GameManager_OnRainZoneCanceled(object sender, EventArgs e) {
+    //    tigerRMC.enabled = false;
+    //}
+
+    //private void GameManager_OnRainZoneStarted(object sender, EventArgs e) {
+    //    tigerRMC.enabled = true;
+    //}
+
+    //private void OnDestroy() {
+    //    GameManager.Instance.OnRainZoneStarted -= GameManager_OnRainZoneStarted;
+    //    GameManager.Instance.OnRainZoneCanceled -= GameManager_OnRainZoneCanceled;
+    //}
 
 }

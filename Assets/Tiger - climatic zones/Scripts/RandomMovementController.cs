@@ -3,8 +3,9 @@ using UnityEngine;
 public class RandomMovementController : MonoBehaviour
 {
     
-    [SerializeField] private float speed = 2.0f;
+    private float speed;
     public float GetSpeed => speed;
+    public void SetSpeed(float value) => speed = value;
 
     private Vector2 startCorner;
     private Vector2 endCorner;

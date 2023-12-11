@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SunZoneController : MonoBehaviour
 {
-    [SerializeField] private TigerController tigerController;
+    private TigerController tigerController;
 
     private void Start() {
         GameManager.Instance.OnSunZoneStarted += GameManager_OnSunZoneStarted;

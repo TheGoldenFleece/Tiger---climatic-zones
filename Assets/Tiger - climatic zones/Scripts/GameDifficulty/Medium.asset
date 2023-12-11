@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Medium
   m_EditorClassIdentifier: 
   umbrellaPrefab: {fileID: 5356082917274094863, guid: 374ceed7e598e7347b14b8937dddd5b5, type: 3}
+  difficulty: 1
   zoneDuration: 10
-  sunrayAmount: 3
-  HP: 80
   scorePerSecond: 10
   damagePerSecond: 9
+  moneyCoefficient: 1
+  tigerSpeed: 1.5
+  sunrayAmount: 3
+  sunraySpawnRate: 1
+  sunraySpeed: 2

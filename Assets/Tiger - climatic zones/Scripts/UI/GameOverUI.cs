@@ -27,6 +27,8 @@ public class GameOverUI : MonoBehaviour
         Time.timeScale = 0.0f;
         this.gameObject.SetActive(true);
 
+        PlayerStats.SaveMoney();
+
         int score = (int)GameManager.Counter;
         scoreText.text = "Score: " + score.ToString();
         int lastScore = PlayerPrefs.GetInt(SCORE_PREFS, 0);
@@ -52,5 +54,7 @@ public class GameOverUI : MonoBehaviour
         retryButton.onClick.RemoveAllListeners();
         menuButton.onClick.RemoveAllListeners();
         exitButton.onClick.RemoveAllListeners();
+
+        HPUI.Instance.OnNoHealthLeft -= HPUI_OnNoHealthLeft;
     }
 }

@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Easy
   m_EditorClassIdentifier: 
   umbrellaPrefab: {fileID: 7398204006124887201, guid: feeefa0d97fc9264b875f85c38baf4af, type: 3}
+  difficulty: 0
   zoneDuration: 15
-  sunrayAmount: 2
-  HP: 100
   scorePerSecond: 5
   damagePerSecond: 7
+  moneyCoefficient: 0.5
+  tigerSpeed: 1
+  sunrayAmount: 2
+  sunraySpawnRate: 0.5
+  sunraySpeed: 1.5

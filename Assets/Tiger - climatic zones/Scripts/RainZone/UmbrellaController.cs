@@ -6,13 +6,13 @@ public class UmbrellaController : MonoBehaviour
 {
     public bool EnabledMovement { private set; get; }
 
-    [SerializeField] private Collider2D tigerCollider;
-
     private int sps;
     private int dps;
 
     private Transform umbrellaTransform;
     private Collider2D umbrellaCollider;
+    private Collider2D tigerCollider;
+
 
     private bool isDragging;
     private Vector2 screenPosition;
@@ -39,6 +39,7 @@ public class UmbrellaController : MonoBehaviour
 
     private void GameManager_OnRainZoneStarted(object sender, EventArgs e) {
         this.enabled = true;
+        tigerCollider = Tiger.GetTiger.GetComponent<Collider2D>();
     }
     private void GameManager_OnRainZoneCanceled(object sender, EventArgs e) {
         Drop();

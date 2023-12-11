@@ -1,7 +1,11 @@
 using Scripts;
 using System;
 using System.Collections;
+using UnityEditor.SceneManagement;
+using UnityEditor;
 using UnityEngine;
+using System.Runtime.CompilerServices;
+using Unity.IO.LowLevel.Unsafe;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +15,17 @@ public class GameManager : MonoBehaviour
     public const float ZONE_CHANGE_DELAY = 0.5f;
 
     [SerializeField] private GameDifficultySO[] gameDifficultySOArray;
+    [SerializeField] private Tiger[] tigerArray;
+
+    public Tiger GetTigerType(TigerState tigerState) {
+        foreach (Tiger tiger in tigerArray) {
+            if (tiger.TigerState == tigerState) {
+                return tiger;
+            }
+        }
+
+        return null;
+    }
 
     public event EventHandler OnRainZoneStarted;
     public event EventHandler OnRainZoneCanceled;
@@ -34,12 +49,12 @@ public class GameManager : MonoBehaviour
 
         Counter = 0;
 
-        zone = Zone.Sun;
+        zone = Zone.Rain;
 
         changeZoneCoroutine = ChangeZoneCoroutine();
 
         foreach (GameDifficultySO gameDifficultySO in gameDifficultySOArray) {
-            if (gameDifficultySO.name == PlayerStats.GameDifficulty.ToString()) {
+            if (gameDifficultySO.difficulty == PlayerStats.GameDifficulty) {
                 GDSO = gameDifficultySO;
                 break;
             }
@@ -64,6 +79,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ChangeZoneCoroutine() {
         while (true) {
+            Tiger.SetTiger(TigerState.Rest);
+
             switch (zone) {
                 case Zone.Rain: {
                         zone = Zone.Sun;
@@ -73,6 +90,8 @@ public class GameManager : MonoBehaviour
                         yield return new WaitForSeconds(ZONE_CHANGE_DELAY);
 
                         OnSunZoneStarted?.Invoke(this, EventArgs.Empty);
+
+                        Tiger.SetTiger(TigerState.Chase);
 
                         break;
                     }
@@ -85,6 +104,8 @@ public class GameManager : MonoBehaviour
                         yield return new WaitForSeconds(ZONE_CHANGE_DELAY);
                         OnRainZoneStarted?.Invoke(this, EventArgs.Empty);
 
+                        Tiger.SetTiger(TigerState.Walk);
+
                         break;
                     }
             }
@@ -96,4 +117,5 @@ public class GameManager : MonoBehaviour
     private void OnDestroy() {
         StopCoroutine(changeZoneCoroutine);
     }
+    
 }
